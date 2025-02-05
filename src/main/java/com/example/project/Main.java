@@ -3,8 +3,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main{
-    
-    
+    // TEST CODE
+    public static void main(String[] args) {
+        ArrayList<Integer> intList = new ArrayList<Integer>(Arrays.asList(1, 1, 2, 3, 3, 3, 4, 2, 3, 1, 5, 5, 4));
+        removeDuplicates(intList);
+        for (int num : intList) {
+            System.out.print(num + " ");
+        }
+        // ArrayList<String> newList = new ArrayList<String>(Arrays.asList("apple", "bagel", "john", "jeremy", "bob", "Bicycle", "luke"));
+        // moveBWords(newList);
+        // for (String str : newList) {
+        //     System.out.println(str);
+        // }
+    }
+
+
     /** Inserts toInsert after each String in stringList
     *  that contains the letter "i"
     *
@@ -15,7 +28,13 @@ public class Main{
     *  @param str String to insert
     */
     public static ArrayList<String> insertAfterI(ArrayList<String> stringList, String str){
-       return new ArrayList<String>();
+        for (int i = 0; i < stringList.size(); i++) {
+            if (stringList.get(i).indexOf("i") >= 0) {
+                stringList.add(i + 1, str);
+                i++;
+            }
+        }
+        return stringList;
     }
 
 
@@ -28,6 +47,12 @@ public class Main{
    *  @param stringList  original arraylist of Strings
    */
     public static ArrayList<String> removeThree(ArrayList<String> stringList){
+        for (int i = 0; i < stringList.size(); i++) {
+            if (stringList.get(i).length() == 3) {
+                stringList.remove(i);
+                i--;
+            }
+        }
         return stringList;
     }
 
@@ -41,7 +66,11 @@ public class Main{
    *  @param intList  original array of integers
    */
     public static ArrayList<Integer> reverseArray(int[] intList){
-        return new ArrayList<Integer>();
+        ArrayList<Integer> newList = new ArrayList<Integer>();
+        for (int i = intList.length - 1; i >= 0; i--) {
+            newList.add(intList[i]);
+        }
+        return newList;
     }
 
 
@@ -59,6 +88,10 @@ public class Main{
      *  @param wordList  arraylist of Strings
      */
     public static ArrayList<String> duplicateUpperEnd(ArrayList<String> wordList){
+        int len = wordList.size();
+        for (int i = 0; i < len; i++) {
+            wordList.add(wordList.get(i).toUpperCase());
+        }
         return wordList;
     }
 
@@ -78,7 +111,19 @@ public class Main{
    */
 
     public static ArrayList<String> parseSentence(String sentence){
-        return new ArrayList<String>();
+        ArrayList<String> strList = new ArrayList<String>();
+        String current = "";
+        for (int i = 0; i < sentence.length(); i++) {
+            String newChar = sentence.substring(i, i + 1);
+            if (!newChar.equals(" ")) {
+                current += newChar;
+            } else {
+                strList.add(current);
+                current = "";
+            }
+        }
+        strList.add(current);
+        return strList;
     }
 
 
@@ -99,6 +144,15 @@ public class Main{
    *  @param wordList  arraylist of words
    */
     public static ArrayList<String> moveBWords(ArrayList<String> wordList){
+        int movedCount = 0;
+        for (int i = wordList.size() - 1; i >= movedCount; i--) {
+            if (wordList.get(i).substring(0, 1).toLowerCase().equals("b")) {
+                wordList.add(0, wordList.get(i));
+                wordList.remove(i + 1);
+                movedCount++;
+                i++;
+            }
+        }
         return wordList;
     }
 
@@ -114,6 +168,22 @@ public class Main{
      *  @param intList  intList of Integers
      */
     public static ArrayList<Integer> removeDuplicates(ArrayList<Integer> intList){
+        ArrayList<Integer> uniqueList = new ArrayList<Integer>();
+        for (int i = 0; i < intList.size(); i++) {
+            boolean isDupe = false;
+            for (int j = 0; j < uniqueList.size(); j++) {
+                if (uniqueList.get(j) == intList.get(i)) {
+                    isDupe = true;
+                    break;
+                }
+            }
+            if (!isDupe) {
+                uniqueList.add(intList.get(i));
+            } else {
+                intList.remove(i);
+                i--;
+            }
+        }
         return intList;
     }
 
@@ -125,6 +195,9 @@ public class Main{
     // sameFirstLast([1, 2, 1]) → true
     //sameFirstLast([]) -> false
     public static boolean sameFirstLast(ArrayList<Integer> list){
+        if (list.size() != 0 || list.get(0) == list.get(list.size() - 1)) {
+            return true;
+        }
         return false;
     }
 
@@ -136,7 +209,10 @@ public class Main{
     // swapEnds([1, 2, 3]) → [3, 2, 1]
     // swapEnds([8, 6, 7, 9, 5]) → [5, 6, 7, 9, 8]
     // swapEnds([]->[])
-    public static ArrayList<Integer> swapEnds(ArrayList<Integer> list){        
+    public static ArrayList<Integer> swapEnds(ArrayList<Integer> list){   
+        if (list.size() != 0) {
+            list.set(0, list.set(list.get(list.size() - 1), list.get(0)));
+        }     
         return list;
     }
 
@@ -221,4 +297,5 @@ public class Main{
     public static ArrayList<Integer> modes(int[] numList){
         return new ArrayList<Integer>();
     }
+    
 }
