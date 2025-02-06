@@ -5,8 +5,8 @@ import java.util.Arrays;
 public class Main{
     // TEST CODE
     public static void main(String[] args) {
-        ArrayList<Integer> intList = new ArrayList<Integer>(Arrays.asList(1, 1, 2, 3, 3, 3, 4, 2, 3, 1, 5, 5, 4));
-        removeDuplicates(intList);
+        ArrayList<Integer> intList = new ArrayList<Integer>(Arrays.asList(3, 2, 5, 4, 3, 2, 4));
+        fix34(intList);
         for (int num : intList) {
             System.out.print(num + " ");
         }
@@ -23,7 +23,7 @@ public class Main{
     *
     *  DOES mutate (modify) elements of stringList.
     *  PRECONDITION: stringList.size() > 0, toInsert.length() > 0
-    *
+    *-
     *  @param stringList  original arraylist of Strings
     *  @param str String to insert
     */
@@ -226,6 +226,12 @@ public class Main{
     // zeroFront([0, 1, 1, 0, 1]) → [0, 0, 1, 1, 1]
     // zeroFront([1, 0]) → [0, 1]
     public static ArrayList<Integer> zeroFront(ArrayList<Integer> list){
+        int zeroes = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) == 0) {
+                list.set(i, list.set(zeroes, 0));
+            }
+        }
         return list;
     }
 
@@ -239,6 +245,29 @@ public class Main{
     // notAlone([1, 2, 3, 2, 5, 2], 2) → [1, 3, 3, 5, 5, 5]
     // notAlone([3, 4], 3) → [4,4]
     public static ArrayList<Integer> notAlone(ArrayList<Integer> list, int val){
+        for(int i = 0; i < list.size(); i++) {
+            if (list.get(i) == val) {
+                int lower;
+                int upper;
+                if (i != 0) {
+                    lower = list.get(i - 1);
+                } else {
+                    lower = list.get(list.size() - 1);
+                }
+                if (i != list.size() - 1) {
+                    upper = list.get(i + 1);
+                } else {
+                    upper = list.get(0);
+                }
+                if (val != upper && val != lower) {
+                    if (upper > lower) {
+                        list.set(i, upper);
+                    } else {
+                        list.set(i, lower);
+                    }
+                }
+            }
+        }
         return list;
     }
 
@@ -251,6 +280,11 @@ public class Main{
     // shiftLeft([1]) → [1]
 
     public static ArrayList<Integer> shiftLeft(ArrayList<Integer> list){
+        int first = list.get(0);
+        for (int i = 0; i < list.size() - 1; i++) {
+            list.set(i, list.get(i + 1));
+        }
+        list.set(list.size() - 1, first);
         return list;
     }
     
@@ -265,6 +299,15 @@ public class Main{
     // fix34([3, 2, 2, 4]) → [3, 4, 2, 2]
 
     public static ArrayList<Integer> fix34(ArrayList<Integer> list){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) == 3) {
+                for (int j = 1; j < list.size(); j++) {
+                    if (list.get(j) == 4 && list.get(j - 1) != 3) {
+                        list.set(i + 1, list.set(j, list.get(i + 1)));
+                    }
+                }
+            }
+        }
         return list;
     }
 
@@ -295,6 +338,31 @@ public class Main{
    *  @param numList  numList of ints
    */
     public static ArrayList<Integer> modes(int[] numList){
+        int mode = 0;
+        ArrayList<Integer> uniqueList = new ArrayList<Integer>();
+        for (int num : numList) {
+            uniqueList.add(num);
+        }
+        removeDuplicates(uniqueList);
+        int[][] countEach = new int[2][uniqueList.size()];
+        for (int i = 0; i < uniqueList.size(); i++) {
+            countEach[0][i] = uniqueList.get(i);
+        }
+        for (int i = 0; i < numList.length; i++) {
+            for (int j = 0; j < countEach.length; j++) {
+                if (countEach[0][j] == numList[i]) {
+                    countEach[1][j]++;
+                    if(countEach[1][j] > mode) {
+                        mode = countEach[1][j];
+                    }
+                    break;
+                }
+            }
+        }
+        ArrayList<Integer> modes = new ArrayList<Integer>();
+        for (int i = 0; i < countEach.length; i++) {
+            
+        }
         return new ArrayList<Integer>();
     }
     
