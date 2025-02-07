@@ -5,11 +5,12 @@ import java.util.Arrays;
 public class Main{
     // TEST CODE
     public static void main(String[] args) {
-        ArrayList<Integer> intList = new ArrayList<Integer>(Arrays.asList(3, 2, 5, 4, 3, 2, 4));
-        fix34(intList);
-        for (int num : intList) {
+        int[] intList = {1, 8, 5, 4, 8, 4};
+        ArrayList<Integer> modeList = modes(intList);
+        for (int num : modeList) {
             System.out.print(num + " ");
         }
+        System.out.println();
         // ArrayList<String> newList = new ArrayList<String>(Arrays.asList("apple", "bagel", "john", "jeremy", "bob", "Bicycle", "luke"));
         // moveBWords(newList);
         // for (String str : newList) {
@@ -195,7 +196,7 @@ public class Main{
     // sameFirstLast([1, 2, 1]) → true
     //sameFirstLast([]) -> false
     public static boolean sameFirstLast(ArrayList<Integer> list){
-        if (list.size() != 0 || list.get(0) == list.get(list.size() - 1)) {
+        if (list.size() != 0 && list.get(0) == list.get(list.size() - 1)) {
             return true;
         }
         return false;
@@ -211,7 +212,7 @@ public class Main{
     // swapEnds([]->[])
     public static ArrayList<Integer> swapEnds(ArrayList<Integer> list){   
         if (list.size() != 0) {
-            list.set(0, list.set(list.get(list.size() - 1), list.get(0)));
+            list.set(0, list.set(list.size() - 1, list.get(0)));
         }     
         return list;
     }
@@ -230,6 +231,7 @@ public class Main{
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) == 0) {
                 list.set(i, list.set(zeroes, 0));
+                zeroes++;
             }
         }
         return list;
@@ -344,24 +346,39 @@ public class Main{
             uniqueList.add(num);
         }
         removeDuplicates(uniqueList);
+        for (int num : uniqueList) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
         int[][] countEach = new int[2][uniqueList.size()];
         for (int i = 0; i < uniqueList.size(); i++) {
             countEach[0][i] = uniqueList.get(i);
         }
+        System.out.println(numList.length);
         for (int i = 0; i < numList.length; i++) {
-            for (int j = 0; j < countEach.length; j++) {
+            for (int j = 0; j < countEach[0].length; j++) {
+                System.out.print(countEach[0][j]);
                 if (countEach[0][j] == numList[i]) {
                     countEach[1][j]++;
                     if(countEach[1][j] > mode) {
                         mode = countEach[1][j];
                     }
+                    System.out.println(" " + countEach[1][j] + " " + mode);
                     break;
                 }
+                System.out.println();
             }
         }
         ArrayList<Integer> modes = new ArrayList<Integer>();
-        for (int i = 0; i < countEach.length; i++) {
-            
+        for (int i = 0; i < countEach[0].length; i++) {
+            if (countEach[1][i] == mode) {
+                modes.add(countEach[0][i]);
+            }
+            System.out.println(countEach[1][i]);
+        }
+        System.out.println("--------------------");
+        if (modes.size() < countEach[0].length) {
+            return modes;
         }
         return new ArrayList<Integer>();
     }
