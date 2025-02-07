@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Main{
     // TEST CODE
     public static void main(String[] args) {
-        int[] intList = {1, 8, 5, 4, 8, 4};
+        int[] intList = {4, 5, 7, 5, 7, 4};
         ArrayList<Integer> modeList = modes(intList);
         for (int num : modeList) {
             System.out.print(num + " ");
@@ -346,27 +346,19 @@ public class Main{
             uniqueList.add(num);
         }
         removeDuplicates(uniqueList);
-        for (int num : uniqueList) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
         int[][] countEach = new int[2][uniqueList.size()];
         for (int i = 0; i < uniqueList.size(); i++) {
             countEach[0][i] = uniqueList.get(i);
         }
-        System.out.println(numList.length);
         for (int i = 0; i < numList.length; i++) {
             for (int j = 0; j < countEach[0].length; j++) {
-                System.out.print(countEach[0][j]);
                 if (countEach[0][j] == numList[i]) {
                     countEach[1][j]++;
                     if(countEach[1][j] > mode) {
                         mode = countEach[1][j];
                     }
-                    System.out.println(" " + countEach[1][j] + " " + mode);
                     break;
                 }
-                System.out.println();
             }
         }
         ArrayList<Integer> modes = new ArrayList<Integer>();
@@ -374,9 +366,7 @@ public class Main{
             if (countEach[1][i] == mode) {
                 modes.add(countEach[0][i]);
             }
-            System.out.println(countEach[1][i]);
         }
-        System.out.println("--------------------");
         if (modes.size() < countEach[0].length) {
             return modes;
         }
